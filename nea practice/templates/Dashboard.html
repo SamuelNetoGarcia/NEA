@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>This is the Dashboard</h2>
+    <p>you can view all of your options here</p>
+<ul>
+    <li> <a href="{{ url_for('Calendar') }}">Go to Calendar</a></li>
+    <li> <a href="{{ url_for('ViewBookings') }}">Go To Bookings</a></li>
+</ul>
+
+{% endblock %}

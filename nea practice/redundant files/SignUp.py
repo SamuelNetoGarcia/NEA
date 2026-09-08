@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from  TitleScreen import TitleScreen
+import flask
 
 class SignUp(tk.Frame):
     def __init__(self, parent,controller):
