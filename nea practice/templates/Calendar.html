@@ -7,4 +7,33 @@
     <p>
     your calendar will be displayed below
     </p>
-{% endblock %}
+
+<!-- remember use {} for putting in flask code-->
+
+ <div class = "header">
+
+     <a href = "{{ url_for('CalendarMonth', year=prev_year, month=prev_month) }}" class="nav-arrow">&lt;</a> <!-- make a button that sends you to the prev month -->
+    <h2>{{monthname}} {{year}}</h2>
+     <a href = "{{ url_for('CalendarMonth', year=next_year, month=next_month) }}" class="nav-arrow">&gt;</a> <!-- the other way around now -->
+ </div>
+
+
+<div class = "grid">
+    {%for day_name in ["mon","tue","wed","thu","fri","sat","sun"]%}
+        <div class = "label for day"> {{day_name}} </div>
+    {%endfor%}
+
+  {% for week in weeks %}
+      {% for day in week %}
+          {% if day == 0 %}
+              <div class="day-cell empty"></div>
+          {% else %}
+              <a href="{{ url_for('BookClassroom', year=year, month=month, day=day) }}"
+                 class="day-cell{% if day == today %} today{% endif %}">
+                  {{ day }}
+              </a>
+          {% endif %}
+      {% endfor %}
+  {% endfor %}
+  </div>
+  {% endblock %}
