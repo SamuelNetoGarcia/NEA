@@ -1,11 +1,13 @@
 
 
 import flask
+import werkzeug.security
+
 import database
 app = flask.Flask(__name__)
 @app.route('/')
 def index():
-    return flask.redirect(flask.url_for("signup"))
+    return flask.render_template("Title.html")
 
 
 
@@ -29,8 +31,21 @@ def signup():
 
         return flask.render_template('SignUp.html')
 
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if flask.request.method == "POST":
+        username = flask.request.form.get('username')
+        password = flask.request.form.get('password')
+# code here doesnt currently work if the username is nothing, (row = none if it cant find the username????)
+        row = database.fetch_users(username)
 
-
+        password_hash = row[2]
+        if werkzeug.security.check_password_hash(password_hash, password):
+            return flask.redirect(flask.url_for("Dashboard"))
+        else:
+            return flask.render_template('Login.html')
+    else:
+        return flask.render_template('Login.html')
 
 #this is the flask route i made for the dashboard page, which is necessary as it needs to be rendered here for the functions to work
 @app.route("/dashboard", methods=['GET', 'POST'])
